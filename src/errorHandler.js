@@ -1,6 +1,15 @@
+export const badRequestHandler = (err, req, res, next) => {
+  console.log("ERR ", err);
+  if (err.status === 400) {
+    res.status(400).send({ message: err.message, errorsList: err.errorsList });
+  } else {
+    next(err);
+  }
+};
+
 export const unauthorizedHandler = (err, req, res, next) => {
   if (err.status === 401) {
-    res.status(401).send({ message: err.message });
+    res.status(401).send({ message: err.message || "Unauthorized" });
   } else {
     next(err);
   }
@@ -8,7 +17,14 @@ export const unauthorizedHandler = (err, req, res, next) => {
 
 export const forbiddenHandler = (err, req, res, next) => {
   if (err.status === 403) {
-    res.status(403).send({ message: err.message });
+    res.status(403).send({ message: err.message || "Forbidden" });
+  } else {
+    next(err);
+  }
+};
+export const notFoundHandler = (err, req, res, next) => {
+  if (err.status === 404) {
+    res.status(404).send({ message: err.message || "Not found!" });
   } else {
     next(err);
   }

@@ -19,22 +19,22 @@ const CourseSchema = new Schema(
   }
 );
 
-CourseSchema.static("checkCredentials", async function (username, plainPW) {
-  const aCourse = await this.findOne({ username }); // "this" here refers to the UsersModel
+// CourseSchema.static("checkCredentials", async function (username, plainPW) {
+//   const aCourse = await this.findOne({ username }); // "this" here refers to the UsersModel
 
-  console.log(aCourse);
+//   console.log(aCourse);
 
-  if (aCourse) {
-    const isMatch = await bcrypt.compare(plainPW, user.password);
+//   if (aCourse) {
+//     const isMatch = await bcrypt.compare(plainPW, user.password);
 
-    if (isMatch) {
-      return aCourse;
-    } else {
-      return null;
-    }
-  } else {
-    return null;
-  }
-});
+//     if (isMatch) {
+//       return aCourse;
+//     } else {
+//       return null;
+//     }
+//   } else {
+//     return null;
+//   }
+// });
 
 export default model("Course", CourseSchema);

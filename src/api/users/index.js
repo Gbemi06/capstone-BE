@@ -16,14 +16,11 @@ usersRouter.post("/login", async (req, res, next) => {
     if (newUser) {
       const token = await generateToken({
         _id: newUser._id,
-        username: newUser.username,
         role: newUser.role,
       });
       res.send({
         token,
         role: newUser.role,
-        firstName: newUser.firstName,
-        lastName: newUser.lastName,
       });
     } else {
       res.status(401).send({ error: "Invalid credentials" });
