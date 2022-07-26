@@ -11,12 +11,13 @@ usersRouter.post("/login", async (req, res, next) => {
     const { username, password } = req.body;
     console.log(username, password);
     const newUser = await UserModel.checkCredentials(username, password);
-    console.log(newUser);
+    // console.log(newUser);
 
     if (newUser) {
       const token = await generateToken({
         _id: newUser._id,
         role: newUser.role,
+        username: newUser.username,
       });
       res.send({
         token,
@@ -34,13 +35,14 @@ usersRouter.post("/login", async (req, res, next) => {
 usersRouter.post("/register", async (req, res, next) => {
   try {
     const newUser = new UserModel(req.body);
-    const { role } = await newUser.save();
+    await newUser.save();
     console.log(newUser);
 
     if (newUser) {
       const token = await generateToken({
         _id: newUser._id,
         username: newUser.username,
+        role: newUser.role,
       });
       res.send({ token });
     }

@@ -4,7 +4,8 @@ import mongoose from "mongoose";
 import listUrl from "express-list-endpoints";
 import usersRouter from "./api/users/index.js";
 import coursesRouter from "./api/courses/index.js";
-import adminRouter from "./api/admin/index.js";
+import carouselRouter from "./api/carousel/index.js";
+import profileRouter from "./api/profile/index.js";
 import {
   badRequestHandler,
   forbiddenHandler,
@@ -22,11 +23,12 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/users", usersRouter);
-app.use("/Admin", adminRouter);
+app.use("/carousel", carouselRouter);
+//app.use("/Admin", adminRouter);
 app.use("/courses", coursesRouter);
 //app.use("/Teacher", teachersRouter);
 //app.use("Student", studentsRouter);
-// app.use("/profile", profileRouter);
+app.use("/profile", profileRouter);
 
 app.use(badRequestHandler);
 app.use(unauthorizedHandler);

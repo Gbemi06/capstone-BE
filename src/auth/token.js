@@ -14,12 +14,13 @@ export const tokenAuth = async (req, res, next) => {
     try {
       const token = req.headers.authorization.split(" ")[1];
       // const token = req.headers.authorization.replace("Bearer ", "");
-      console.log(token);
+      // console.log(token);
       const payload = await verifyToken(token);
       if (payload) {
         req.user = {
           _id: payload._id,
           username: payload.username,
+          role: payload.role,
         };
         next();
       }

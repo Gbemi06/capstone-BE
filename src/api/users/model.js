@@ -38,7 +38,7 @@ UserSchema.pre("save", async function (next) {
   const plainUsername = this;
   const currentUsername = plainUsername.username;
 
-  console.log(currentUsername);
+  // console.log(currentUsername);
 
   if (currentUsername.is("username")) {
     next("username already exists");
@@ -63,7 +63,7 @@ UserSchema.methods.toJSON = function () {
 UserSchema.static("checkCredentials", async function (username, plainPW) {
   const user = await this.findOne({ username }); // "this" here refers to the UsersModel
 
-  console.log(user);
+  //console.log(user);
 
   if (user) {
     const checkMatch = await bcrypt.compare(plainPW, user.password);

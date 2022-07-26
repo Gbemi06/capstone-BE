@@ -1,6 +1,6 @@
 import express from "express";
 import UserModel from "./model.js";
-import AdminModel from "./model.js";
+import CarouselModel from "./model.js";
 import { adminOnlyMiddleware } from "../../auth/adminOnly.js";
 import { teacherOnlyMiddleware } from "../../auth/teacherOnly.js";
 import { tokenAuth } from "../../auth/token.js";
@@ -10,7 +10,7 @@ const { v2: cloudinary } = pkg;
 import pkg2 from "multer-storage-cloudinary";
 const { CloudinaryStorage } = pkg2;
 
-const adminRouter = express.Router();
+const carouselRouter = express.Router();
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_NAME,
@@ -29,12 +29,12 @@ const carouselUpload = multer({
   }),
 }).single("avatar");
 
-adminRouter.post("/carousel", carouselUpload, async (req, res, next) => {
+carouselRouter.post("/", carouselUpload, async (req, res, next) => {
   try {
     console.log(req.file);
     const { path, originalname } = req.file;
     console.log(path);
-    const newCarousel = new AdminModel({
+    const newCarousel = new CarouselModel({
       path,
       originalname,
       type: "carousel",
@@ -46,43 +46,43 @@ adminRouter.post("/carousel", carouselUpload, async (req, res, next) => {
   }
 });
 
-adminRouter.get("/carousel", carouselUpload, async (req, res, next) => {
+carouselRouter.get("/", carouselUpload, async (req, res, next) => {
   try {
-    const carousel = await AdminModel.find({ type: "carousel" });
+    const carousel = await CarouselModel.find({ type: "carousel" });
     res.send(carousel);
   } catch (error) {
     next(error);
   }
 });
 
-adminRouter.get("/carousel/:id", carouselUpload, async (req, res, next) => {
+carouselRouter.get("/:id", carouselUpload, async (req, res, next) => {
   try {
     const { id } = req.params;
-    const carousel = await AdminModel.findById(id);
+    const carousel = await CarouselModel.findById(id);
     res.send(carousel);
   } catch (error) {
     next(error);
   }
 });
 
-adminRouter.put("/carousel/:id", carouselUpload, async (req, res, next) => {
+carouselRouter.put("/:id", carouselUpload, async (req, res, next) => {
   try {
     const { id } = req.params;
-    const carousel = await AdminModel.findByIdAndUpdate(id, req.body);
+    const carousel = await CarouselModel.findByIdAndUpdate(id, req.body);
     res.send(carousel);
   } catch (error) {
     next(error);
   }
 });
 
-adminRouter.delete("/carousel/:id", carouselUpload, async (req, res, next) => {
+carouselRouter.delete("/:id", carouselUpload, async (req, res, next) => {
   try {
     const { id } = req.params;
-    await AdminModel.findByIdAndDelete(id);
+    await CarouselModel.findByIdAndDelete(id);
     res.send("Carousel deleted");
   } catch (error) {
     next(error);
   }
 });
 
-export default adminRouter;
+export default carouselRouter;
