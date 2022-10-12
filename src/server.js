@@ -24,10 +24,10 @@ app.use(express.json());
 
 app.use("/users", usersRouter);
 app.use("/carousel", carouselRouter);
-//app.use("/Admin", adminRouter);
+app.use("/Admin", adminRouter);
 app.use("/courses", coursesRouter);
-//app.use("/Teacher", teachersRouter);
-//app.use("Student", studentsRouter);
+app.use("/Teacher", teachersRouter);
+app.use("Student", studentsRouter);
 app.use("/profile", profileRouter);
 
 app.use(badRequestHandler);

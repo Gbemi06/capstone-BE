@@ -104,4 +104,35 @@ usersRouter.delete("/:id", async (req, res, next) => {
   }
 });
 
+usersRouter.get("/:id", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const user = await UserModel.findById(id);
+    res.send(user);
+  } catch (error) {
+    next(error);
+  }
+});
+
+usersRouter.get("/:id/courses", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const user = await UserModel.findById(id).populate("courses");
+    res.send(user.courses);
+  } catch (error) {
+    next(error);
+  }
+});
+
+usersRouter.get("/:id/courses/:courseId", async (req, res, next) => {
+  try {
+    const { id, courseId } = req.params;
+    const user = await UserModel.findById(id).populate("courses");
+    const course = user.courses.find((c) => c._id.toString() === courseId);
+    res.send(course);
+  } catch (error) {
+    next(error);
+  }
+});
+
 export default usersRouter;
