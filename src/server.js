@@ -6,6 +6,9 @@ import usersRouter from "./api/users/index.js";
 import coursesRouter from "./api/courses/index.js";
 import carouselRouter from "./api/carousel/index.js";
 import profileRouter from "./api/profile/index.js";
+import teachersRouter from "./api/teachers/index.js";
+// import studentsRouter from "./api/students/index.js";
+// import adminRouter from "./api/admin/index.js";
 import {
   badRequestHandler,
   forbiddenHandler,
@@ -24,10 +27,10 @@ app.use(express.json());
 
 app.use("/users", usersRouter);
 app.use("/carousel", carouselRouter);
-app.use("/Admin", adminRouter);
+// app.use("/Admin", adminRouter);
 app.use("/courses", coursesRouter);
 app.use("/Teacher", teachersRouter);
-app.use("Student", studentsRouter);
+// app.use("Student", studentsRouter);
 app.use("/profile", profileRouter);
 
 app.use(badRequestHandler);
